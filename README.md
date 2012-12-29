@@ -12,7 +12,8 @@ It generates:
 1. A complete Table of Contents at `Home.md`
 2. A root file for each subject (directory) available.
 3. A `_sidebar.md` for each subject (directory) available.
-4. A Label for files that are empty: (PENDING)
+4. A Label for files that are empty:  ⚑ 
+5. A `_footer.md` file warning users that TOC is generated.
 
 #### You can see an example here: https://github.com/hybridgroup/GitHub-Wikifier/wiki
 
