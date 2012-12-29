@@ -15,3 +15,19 @@ It generates:
 4. A Label for files that are empty: (PENDING)
 
 #### You can see an example here: 
+
+### Installation
+
+You need to install the `pre-commit` hook in the GitHub Wiki Repository and give it execution access.
+
+So run the following commands:
+
+    curl https://raw.github.com/kuroir/GitHub-Wikifier/master/pre-commit > .git/hooks/pre-commit
+    chmod +x .git/hooks/pre-commit 
+
+### Usage
+
+1. Work on your content.
+2. Do a Commit.
+3. Let the Script do its Magic.
+4. Push!
