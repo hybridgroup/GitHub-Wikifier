@@ -1,0 +1,56 @@
+#!/bin/zsh
+# Wikify by Mario "Kuroir" Ricalde (@kuroir)
+function wikify() {
+  # Resolve where we should get the subjects.
+  if [[ "$@" != "" ]]; then;
+    subjects=( $@ );
+  else;
+    subjects=( . );
+  fi;
+
+  # Empty Home.md
+  echo "Removing Home.md"
+  home_file="$subjects/Home.md"
+  rm $home_file
+
+  for subject in $(ls -l $subjects | egrep '^d' | awk '{ print $9}'); do;
+    directory="$subjects/$subject"
+    file="$directory.md"
+    echo "Processing Directory: $subject"
+
+
+    ## Generate Table of Contents
+    toc=$(ls -l $directory | awk ' NF >= 7 {
+        if( ! match($9, /(sidebar|header|footer)/) ) {
+          sub(/.*\//, "", $9);
+          sub(/\.md$/, "", $9);
+          gsub(/\-/, " ", $9);
+          printf("[[%s]]%s<br>\n", $9, ($5 == 0) ? " (PENDING)" : "");
+        } 
+      }')
+
+    subject_title="### [[${subject//-/ }]]";
+
+    # Write Root File (Smaller Index)
+    echo "    Writing Index to $file";
+    echo $toc > $file
+
+    ## Add to the sidebar.
+    sidebar_file="$directory/_sidebar.md"
+    echo "    Writing Index to $sidebar_file";
+    echo $subject_title > $sidebar_file
+    echo $toc >> $sidebar_file
+
+    # Append to Home.md
+    echo "    Writing Index to $home_file";
+    echo $subject_title >> $home_file
+    echo $toc >> $home_file
+
+    # Add the files to Git
+    git add $file
+    git add $home_file
+    git add $sidebar_file
+  done 
+}
+
+wikify .
