@@ -56,7 +56,7 @@ function wikify() {
     git add $home_file
     git add $sidebar_file
   done
-  echo "**Important**: The Tables of Content are generated. Any change will be overridden on the next update.<br>For more information: [GitHub Wikifier](https://github.com/kuroir/GitHub-Wikifier)" >> "$subjects/_footer.md"
+  echo "**Important**: The Tables of Content are generated. Any change will be overridden on the next update.<br>For more information: [GitHub Wikifier](https://github.com/kuroir/GitHub-Wikifier)" > "$subjects/_footer.md"
   git add $subjects/_footer.md
 }
 
