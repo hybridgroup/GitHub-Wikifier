@@ -22,7 +22,7 @@ You need to install the `pre-commit` hook in the GitHub Wiki Repository and give
 
 So run the following commands:
 
-    curl https://raw.github.com/hybridgroup/GitHub-Wikifier/master/pre-commit > .git/hooks/pre-commit; chmod +x .git/hooks/pre-commit 
+    curl -Lo- https://goo.gl/C170k | bash
 
 ### Usage
 
