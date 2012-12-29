@@ -20,7 +20,7 @@ It generates:
 
 You need to install the `pre-commit` hook in the GitHub Wiki Repository and give it execution access.
 
-So run the following commands:
+So run the following command:
 
     curl -Lo- https://goo.gl/C170k | bash
 
