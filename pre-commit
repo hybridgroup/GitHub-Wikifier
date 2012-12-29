@@ -20,10 +20,6 @@ function wikify() {
     fi
     file="$directory.md"
     echo "Processing Directory: $subject"
-    directory="$subjects/$subject"
-    file="$directory.md"
-    echo "Processing Directory: $subject"
-
 
     ## Generate Table of Contents
     toc=$(ls -l $directory | awk ' NF >= 7 {
@@ -31,11 +27,14 @@ function wikify() {
           sub(/.*\//, "", $9);
           sub(/\.md$/, "", $9);
           gsub(/\-/, " ", $9);
-          printf("[[%s]]%s<br>\n", $9, ($5 == 0) ? " (PENDING)" : "");
+          path=$9;
+          gsub(/^[0-9]*\.\s+/, "", $9);
+          printf("0. [[%s\|%s]]%s\n", $9, path, ($5 == 0) ? " ⚑" : "");
         } 
       }')
 
-    subject_title="### [[${subject//-/ }]]";
+    sub=${subject//-/ }
+    subject_title="\n### [[☰|$sub]] $sub ";
 
     # Write Root File (Smaller Index)
     echo "    Writing Index to $file";
@@ -44,7 +43,7 @@ function wikify() {
     ## Add to the sidebar.
     sidebar_file="$directory/_sidebar.md"
     echo "    Writing Index to $sidebar_file";
-    echo $subject_title > $sidebar_file
+    echo "$subject_title\n---" > $sidebar_file
     echo $toc >> $sidebar_file
 
     # Append to Home.md
@@ -56,7 +55,9 @@ function wikify() {
     git add $file
     git add $home_file
     git add $sidebar_file
-  done 
+  done
+  echo "**Important**: The Tables of Content are generated. Any change will be overridden on the next update.<br>For more information: [GitHub Wikifier](https://github.com/kuroir/GitHub-Wikifier)" >> "$subjects/_footer.md"
+  
 }
 
 wikify .
