@@ -15,6 +15,12 @@ function wikify() {
 
   for subject in $(ls -l $subjects | egrep '^d' | awk '{ print $9}'); do;
     directory="$subjects/$subject"
+    if [[ "$directory" =~ "assets$" ]]; then
+      continue
+    fi
+    file="$directory.md"
+    echo "Processing Directory: $subject"
+    directory="$subjects/$subject"
     file="$directory.md"
     echo "Processing Directory: $subject"
 
