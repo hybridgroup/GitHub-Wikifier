@@ -1,6 +1,6 @@
 ### What is GitHub Wikifier?
 
-This is a script that will generate all the Table of Contents for your GitHub Wiki's.
+This is a script that will generate all the Table of Contents for your GitHub Wikis.
 
 All you need to do is stick with a directory structure (Subjects), and add files inside.
 
