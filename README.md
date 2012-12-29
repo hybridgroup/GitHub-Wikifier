@@ -14,7 +14,7 @@ It generates:
 3. A `_sidebar.md` for each subject (directory) available.
 4. A Label for files that are empty: (PENDING)
 
-#### You can see an example here: https://github.com/kuroir/GitHub-Wikifier/wiki
+#### You can see an example here: https://github.com/hybridgroup/GitHub-Wikifier/wiki
 
 ### Installation
 
