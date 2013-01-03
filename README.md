@@ -26,8 +26,7 @@ The Wikifier Script comes in form of a git `pre-commit` hook. Once you're done w
 you just need to add the files, and commit your changes. The script will run, and add the generated files
 to your commit. After that, just `push` and that's it!
 
-Read a little bit more on [Naming Conventions in the Wiki](https://github.com/hybridgroup/GitHub-Wikifier/wiki
-).
+Read a little bit more on [Naming Conventions in the Wiki](https://github.com/hybridgroup/GitHub-Wikifier/wiki/1.2.2.-Naming-Files).
 
 ## Demo
 
@@ -43,5 +42,4 @@ So run the following command:
 
 ## Usage
 
-For documentation on how to use GitHub Wikifier, [check out the Wiki](https://github.com/hybridgroup/GitHub-Wikifier/wiki
-).
+For documentation on how to use GitHub Wikifier, [check out the Wiki]https://github.com/hybridgroup/GitHub-Wikifier/wiki/1.-Usage).
