@@ -4,7 +4,7 @@
 function wikify() {
   # Filter some files and directories.
   function continue_if_filtered() {
-    if [[ "$@" =~ "assets$" ]]; then
+    if [[ "$@" =~ "images$" ]]; then
       continue
     elif [[ "$@" =~ "(_sidebar|_footer|_header)" ]]; then
       continue
