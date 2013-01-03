@@ -29,9 +29,9 @@ to your commit. After that, just `push` and that's it!
 Read a little bit more on [Naming Conventions in the Wiki](https://github.com/hybridgroup/GitHub-Wikifier/wiki
 ).
 
-### You can see an example here: https://github.com/hybridgroup/GitHub-Wikifier/wiki
+## Demo
 
-GitHub Wikifier will generate all the Table of Contents for your GitHub Wikis.
+You can see an example here: https://github.com/hybridgroup/GitHub-Wikifier/wiki
 
 ## Installation (and update)
 
