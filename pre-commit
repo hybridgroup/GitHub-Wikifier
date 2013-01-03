@@ -151,7 +151,7 @@ function wikify() {
 
   while read line
   do 
-    git add $line
+    [ -f $line ] && add $line
   done < /tmp/wikify.txt
 
   echo "**Important**: The Tables of Content are generated. Any change will be overridden on the next update.<br>For more information: [GitHub Wikifier](https://github.com/hybridgroup/GitHub-Wikifier)" > "$subjects/_footer.md"
