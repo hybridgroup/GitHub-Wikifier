@@ -13,7 +13,7 @@ How do we add documentation?  We have some options:
 
 * Stuff all the documentation on the `README.md` file.<br>At the expense of the reader.
 * Spend a lot of time working on a custom website for the docs.<br>Spending more time setting up a place to write the Docs, than actually writing them. Also removes the "wiki" feature.
-* Try using GitHub Wiki's, failing miserably, then fall back to `README.md`<br>We've all been there! GitHub Wiki's can be confusing and tedious to use.
+* Try using a GitHub Wiki, fail miserably, then fall back to `README.md`<br>We've all been there! GitHub Wiki's can be confusing and tedious to use.
 
 Those 3 options are more about wasting your time, than actually writing code or documentation!
 
