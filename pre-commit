@@ -54,7 +54,7 @@ function wikify() {
       1="$1.md"
     fi
     identifier=$(echo "$1" | sed -e 's/.*\/\([a-zA-Z0-9\.\-]*\).md$/\1/')
-    name=$(echo "$identifier" | sed -e 's/^[0-9\.]*\-//')
+    name=$(echo "$identifier" | sed -e 's/^[0-9\.]*\-//' | sed -e 's/\-/ /g')
   }
 
   function subject_to_list() {
@@ -149,6 +149,7 @@ function wikify() {
     parse_subject $subject
   done
 
+  echo "$subjects/Home.md" >> /tmp/wikify.txt
   while read line
   do 
     [ -f $line ] && git add $line
