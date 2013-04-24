@@ -20,13 +20,13 @@ See it in action in [artoo wiki](https://github.com/hybridgroup/artoo/wiki)
 
 3. Run commnad to install script
 
-    curl -Lo- https://goo.gl/C170k | bash
+      curl -Lo- https://goo.gl/C170k | bash
 
 4. Commit your changes
 
-    git commit -m "$message"
+      git commit -m "$message"
 
-* The script wil be trigerred parsing files and directories and add generated files to your commit.
+The script wil be trigerred parsing files and directories and add generated files to your commit.
 
 5. Push your changes
 
