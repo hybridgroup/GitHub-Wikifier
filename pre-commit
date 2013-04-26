@@ -127,20 +127,23 @@ function wikify() {
     done
   }
 
-  initial_depth=0
-  initial_depth=$(directory_depth $subjects)
-  reverse_pointer_depth=0
-  rm -f /tmp/wikify.txt; touch /tmp/wikify.txt
+  function remove_previous_generated_files(){
+    touch /tmp/files_to_add.txt
 
-  # Empty Home.md
-  home_file="$subjects/Home.md"
-  rm $home_file
+    rm $home_file
 
-  # Cleanup Previous Generated Files.
-  for subject in $(find . -type d ! \( -path './.*' -o -path '.' \)); do;
-    rm "$subject.md"
-  done
+    for previous_file in $(find . -type d ! \( -path './.*' -o -path '.' \)); do;
+      rm "$previous_file.md"
+    done
+  }
+
+  function set_initial_values(){
     project_directory=$PWD
+    initial_depth=0
+    initial_depth=$(directory_depth $project_directory)
+    reverse_pointer_depth=0
+  }
+
   function add_files_to_git(){
     echo "$project_directory/Home.md" >> /tmp/files_to_add.txt
 
@@ -151,6 +154,9 @@ function wikify() {
 
     rm -f /tmp/files_to_add.txt
   }
+
+  set_initial_values
+  remove_previous_generated_files
 
   directories_in_current_location=$(ls -l -d $PWD/* | egrep '^d' | awk '{ print $9}')
 
