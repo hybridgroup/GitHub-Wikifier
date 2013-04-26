@@ -98,7 +98,7 @@ function wikify() {
     fi
   }
 
-  function parse_subject() {
+  function parse_files_recursively() {
     depth_and_space $@
     echo "${space}Directory: $@"
 
@@ -117,7 +117,7 @@ function wikify() {
       if [[ "$(file -ib $file)" == "directory" ]]; then
         echo "$file.md" >> /tmp/files_to_add.txt
         recursive_write $file
-        parse_subject $file
+        parse_files_recursively $file
       else
         depth_and_space $file
         echo "${space}File: $file"
@@ -130,6 +130,7 @@ function wikify() {
   function remove_previous_generated_files(){
     touch /tmp/files_to_add.txt
 
+    home_file="$project_directory/Home.md"
     rm $home_file
 
     for previous_file in $(find . -type d ! \( -path './.*' -o -path '.' \)); do;
