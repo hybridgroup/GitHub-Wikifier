@@ -141,11 +141,11 @@ function wikify() {
     rm "$subject.md"
   done
     project_directory=$PWD
+  directories_in_current_location=$(ls -l -d $PWD/* | egrep '^d' | awk '{ print $9}')
 
-  # Begin doing the magic
-  for subject in $(ls -l -d $PWD/* | egrep '^d' | awk '{ print $9}'); do;
-    continue_if_filtered $subject
-    parse_subject $subject
+  for current_directory in $directories_in_current_location; do;
+    continue_if_filtered $current_directory
+    parse_files_recursively $current_directory
   done
 
   echo "$subjects/Home.md" >> /tmp/wikify.txt
