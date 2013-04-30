@@ -106,8 +106,8 @@ function wikify() {
     if [[ "$depth" -eq "0" ]]; then
       echo "$(subject_to_header $@.md)"  >> "$project_directory/Home.md"
       echo "$(subject_to_header $@.md)\n---"  > "$@/_sidebar.md"
-      echo "$@.md" >> /tmp/files_to_add.txt
-      echo "$@/_sidebar.md" >> /tmp/files_to_add.txt
+      echo "$@.md" >> /tmp/files_to_add_wikifier.txt
+      echo "$@/_sidebar.md" >> /tmp/files_to_add_wikifier.txt
     fi
 
     for file in $(ls -l $@ | awk '{ print $9 }'); do;
@@ -115,20 +115,20 @@ function wikify() {
       file="$@/$file"
 
       if [[ "$(file -ib $file)" == "directory" ]]; then
-        echo "$file.md" >> /tmp/files_to_add.txt
+        echo "$file.md" >> /tmp/files_to_add_wikifier.txt
         recursive_write $file
         parse_files_recursively $file
       else
         depth_and_space $file
         echo "${space}File: $file"
-        echo "$file" >> /tmp/files_to.add.txt
+        echo "$file" >> /tmp/files_to_add_wikifier.txt
         recursive_write $file 
       fi
     done
   }
 
   function remove_previous_generated_files(){
-    touch /tmp/files_to_add.txt
+    touch /tmp/files_to_add_wikifier.txt
 
     home_file="$project_directory/Home.md"
     rm $home_file
@@ -146,14 +146,14 @@ function wikify() {
   }
 
   function add_files_to_git(){
-    echo "$project_directory/Home.md" >> /tmp/files_to_add.txt
+    echo "$project_directory/Home.md" >> /tmp/files_to_add_wikifier.txt
 
     while read line
     do
       [ -f $line ] && git add $line
-    done < /tmp/files_to_add.txt
+    done < /tmp/files_to_add_wikifier.txt
 
-    rm -f /tmp/files_to_add.txt
+    rm -f /tmp/files_to_add_wikifier.txt
   }
 
   set_initial_values
