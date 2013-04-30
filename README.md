@@ -14,11 +14,11 @@ See it in action in [artoo wiki](https://github.com/hybridgroup/artoo/wiki)
 
     https://github.com/hybridgroup/GitHub-Wikifier/wiki/_access
 
-2. Create directory structure following this guidelines
+2. Create directory structure following these guidelines
 
     https://github.com/hybridgroup/GitHub-Wikifier/wiki/1.1.-Naming-Guidelines
 
-3. Run commnad to install script
+3. Run command to install script
 
     ```curl -Lo- https://goo.gl/C170k | bash```
 
@@ -26,7 +26,7 @@ See it in action in [artoo wiki](https://github.com/hybridgroup/artoo/wiki)
 
     ```git commit -m "$message"```
 
-    The script wil be trigerred parsing files and directories and add generated files to your commit.
+    The script will be triggered parsing files and directories and add generated files to your commit.
 
 5. Push your changes
 
