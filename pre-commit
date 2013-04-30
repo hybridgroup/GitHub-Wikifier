@@ -81,34 +81,33 @@ function wikify() {
       pointer_file=$@
     fi
 
-    if [[ "$@" != "$subjects" ]]; then
+    if [[ "$@" != "$project_directory" ]]; then
       if [[ "$reverse_pointer_depth" -ne "0" ]]; then
         space=$(calculate_spaces $(($reverse_pointer_depth - 1)))
         echo "$(subject_to_list $file)" >> "$pointer_file.md"
       fi
       (( reverse_pointer_depth++ ))
       recursive_write $(to_parent_subject $@)
-      # if current - 1 = home. Then we're at the bottom! 
-      if [[ "$(to_parent_subject $@)" == "$subjects" ]]; then
+      if [[ "$(to_parent_subject $@)" == "$project_directory" ]]; then
         echo "$(subject_to_list $file)" >> "$@/_sidebar.md"
       fi
     else
       space=$(calculate_spaces $(($reverse_pointer_depth - 2)))
-      echo "$(subject_to_list $file)" >> "$subjects/Home.md"
+      echo "$(subject_to_list $file)" >> "$project_directory/Home.md"
       reverse_pointer_depth=0
     fi
   }
 
-  function parse_subject() {
+  function parse_files_recursively() {
     depth_and_space $@
     echo "${space}Directory: $@"
 
     # Directory write
     if [[ "$depth" -eq "0" ]]; then
-      echo "$(subject_to_header $@.md)"  >> "$subjects/Home.md"
+      echo "$(subject_to_header $@.md)"  >> "$project_directory/Home.md"
       echo "$(subject_to_header $@.md)\n---"  > "$@/_sidebar.md"
-      echo "$@.md" >> /tmp/wikify.txt
-      echo "$@/_sidebar.md" >> /tmp/wikify.txt
+      echo "$@.md" >> /tmp/files_to_add_wikifier.txt
+      echo "$@/_sidebar.md" >> /tmp/files_to_add_wikifier.txt
     fi
 
     for file in $(ls -l $@ | awk '{ print $9 }'); do;
@@ -116,47 +115,61 @@ function wikify() {
       file="$@/$file"
 
       if [[ "$(file -ib $file)" == "directory" ]]; then
-        echo "$file.md" >> /tmp/wikify.txt
+        echo "$file.md" >> /tmp/files_to_add_wikifier.txt
         recursive_write $file
-        parse_subject $file
+        parse_files_recursively $file
       else
         depth_and_space $file
         echo "${space}File: $file"
-        echo "$file" >> /tmp/wikify.txt
+        echo "$file" >> /tmp/files_to_add_wikifier.txt
         recursive_write $file 
       fi
     done
   }
 
-  subjects=$PWD
-  initial_depth=0
-  initial_depth=$(directory_depth $subjects)
-  reverse_pointer_depth=0
-  rm -f /tmp/wikify.txt; touch /tmp/wikify.txt
+  function remove_previous_generated_files(){
+    touch /tmp/files_to_add_wikifier.txt
 
-  # Empty Home.md
-  home_file="$subjects/Home.md"
-  rm $home_file
+    home_file="$project_directory/Home.md"
+    rm $home_file
 
-  # Cleanup Previous Generated Files.
-  for subject in $(find . -type d ! \( -path './.*' -o -path '.' \)); do;
-    rm "$subject.md"
+    for previous_file in $(find . -type d ! \( -path './.*' -o -path '.' \)); do;
+      rm "$previous_file.md"
+    done
+  }
+
+  function set_initial_values(){
+    project_directory=$PWD
+    initial_depth=0
+    initial_depth=$(directory_depth $project_directory)
+    reverse_pointer_depth=0
+  }
+
+  function add_files_to_git(){
+    echo "$project_directory/Home.md" >> /tmp/files_to_add_wikifier.txt
+
+    while read line
+    do
+      [ -f $line ] && git add $line
+    done < /tmp/files_to_add_wikifier.txt
+
+    rm -f /tmp/files_to_add_wikifier.txt
+  }
+
+  set_initial_values
+  remove_previous_generated_files
+
+  directories_in_current_location=$(ls -l -d $PWD/* | egrep '^d' | awk '{ print $9}')
+
+  for current_directory in $directories_in_current_location; do;
+    continue_if_filtered $current_directory
+    parse_files_recursively $current_directory
   done
 
-  # Begin doing the magic
-  for subject in $(ls -l -d $PWD/* | egrep '^d' | awk '{ print $9}'); do;
-    continue_if_filtered $subject
-    parse_subject $subject
-  done
+  add_files_to_git
 
-  echo "$subjects/Home.md" >> /tmp/wikify.txt
-  while read line
-  do 
-    [ -f $line ] && git add $line
-  done < /tmp/wikify.txt
-
-  echo "**Important**: The Tables of Content are generated. Any change will be overridden on the next update.<br>For more information: [GitHub Wikifier](https://github.com/hybridgroup/GitHub-Wikifier)" > "$subjects/_footer.md"
-  subjects="$PWD." # hack to restore ps1
+  echo "**Important**: The Tables of Content are generated. Any change will be overridden on the next update.<br>For more information: [GitHub Wikifier](https://github.com/hybridgroup/GitHub-Wikifier)" > "$project_directory/_footer.md"
+  project_directory="$PWD." # hack to restore ps1
 }
 
 wikify .
