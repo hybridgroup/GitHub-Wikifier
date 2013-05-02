@@ -115,7 +115,7 @@ function wikify() {
       continue_if_filtered $file
       file="$@/$file"
 
-      if [[ "$(file -ib $file)" == "directory" ]]; then
+      if [[ "$(file -ib $file)" =~ "directory" ]]; then
         echo "$file.md" >> /tmp/wikify.txt
         recursive_write $file
         parse_subject $file
