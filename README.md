@@ -39,3 +39,8 @@ See it in action in [artoo wiki](https://github.com/hybridgroup/artoo/wiki)
 # Participate
 
 * Want to contribute making this better? Check out the open issues or send a pull request.
+
+# Maintainers
+
+* [Mario Ricalde](http://github.com/kuroir)
+* [Javier Cervantes](http://github.com/solojavier)
