@@ -50,7 +50,7 @@ function wikify() {
   }
 
   function string_to_name_and_id() {
-    if [[ "$(file -ib $1)" == "directory" ]]; then
+    if [[ "$(file -ib $1)" =~ "directory" ]]; then
       1="$1.md"
     fi
     identifier=$(echo "$1" | sed -e 's/.*\/\([a-zA-Z0-9\.\-]*\).md$/\1/')
