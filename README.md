@@ -42,5 +42,5 @@ See it in action in [artoo wiki](https://github.com/hybridgroup/artoo/wiki)
 
 # Maintainers
 
-* [Mario Ricalde](http://github.com/kuroir)
+* [Mario Ricalde](http://github.com/marioricalde)
 * [Javier Cervantes](http://github.com/solojavier)
