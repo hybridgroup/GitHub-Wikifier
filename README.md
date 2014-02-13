@@ -20,9 +20,7 @@ You need to be using zsh for it to work, or at least need to install the package
 
     https://github.com/yourname/reponame.wiki.git
 
-2. Create directory structure following these guidelines
-
-    https://github.com/yourname/reponame/wiki/1.1.-Naming-Guidelines
+2. Create directory structure following these guidelines https://github.com/hybridgroup/Github-Wikifier/wiki/1.1.-Naming-Guidelines
 
 3. Run command to install script
 
