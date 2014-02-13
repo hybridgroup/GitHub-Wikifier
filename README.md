@@ -12,11 +12,11 @@ See it in action in [artoo wiki](https://github.com/hybridgroup/artoo/wiki)
 
 1. Clone your wiki git repo
 
-    https://github.com/hybridgroup/GitHub-Wikifier/wiki/_access
+    https://github.com/yourname/reponame.wiki.git
 
 2. Create directory structure following these guidelines
 
-    https://github.com/hybridgroup/GitHub-Wikifier/wiki/1.1.-Naming-Guidelines
+    https://github.com/yourname/reponame/wiki/1.1.-Naming-Guidelines
 
 3. Run command to install script
 
