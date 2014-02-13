@@ -42,18 +42,18 @@ function wikify() {
   }
 
   function to_parent_subject() {
-    echo "$@" | sed -e 's/\/[a-zA-Z0-9\.\-]*$//'
+    echo "$@" | sed -e 's/\/[^\/]*$//'
   }
 
   function subject_name() {
-    echo "$@" | sed -e 's/.*\/\([a-zA-Z0-9\.\-]*\).md$/\1/'
+    echo "$@" | sed -e 's/.*\/\([^\/]*\).md$/\1/'
   }
 
   function string_to_name_and_id() {
     if [[ "$(file -ib $1)" =~ "directory" ]]; then
       1="$1.md"
     fi
-    identifier=$(echo "$1" | sed -e 's/.*\/\([a-zA-Z0-9\.\-]*\).md$/\1/')
+    identifier=$(echo "$1" | sed -e 's/.*\/\([^\/]*\).md$/\1/')
     name=$(echo "$identifier" | sed -e 's/^[0-9\.]*\-//' | sed -e 's/\-/ /g')
   }
 
@@ -128,6 +128,7 @@ function wikify() {
     done
   }
 
+  LANG=C
   subjects=$PWD
   initial_depth=0
   initial_depth=$(directory_depth $subjects)
