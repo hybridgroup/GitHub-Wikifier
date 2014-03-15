@@ -10,9 +10,8 @@ See it in action in [artoo wiki](https://github.com/hybridgroup/artoo/wiki)
 
 # Requirements
 
-You need to be using zsh for it to work, or at least need to install the package:
-
-    sudo apt-get install zsh
+1. Zsh ( Install via `sudo apt-get install zsh` or `brew install zsh` )
+2. GNU Utilities ( only for Mac ) via `brew install coreutils`
 
 # How to use
 

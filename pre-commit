@@ -1,7 +1,18 @@
 #!/bin/zsh
+#
 # Wikify by Mario "Kuroir" Ricalde
 #
 function wikify() {
+
+  # gnu ls has natural number sorting, useful for sorting 1, 10, 2 into 1, 2, 10
+  function gls_or_ls() {
+      if hash gls 2>/dev/null; then
+          gls -v "$@"
+      else
+          ls "$@"
+      fi
+  }
+
   # Filter some files and directories.
   function continue_if_filtered() {
     if [[ "$@" =~ "images$" ]]; then
@@ -111,7 +122,7 @@ function wikify() {
       echo "$@/_sidebar.md" >> /tmp/wikify.txt
     fi
 
-    for file in $(ls -l $@ | awk '{ print $9 }'); do;
+    for file in $(gls_or_ls -l -v $@ | awk '{ print $9 }'); do;
       continue_if_filtered $file
       file="$@/$file"
 
@@ -145,7 +156,7 @@ function wikify() {
   done
 
   # Begin doing the magic
-  for subject in $(ls -l -d $PWD/* | egrep '^d' | awk '{ print $9}'); do;
+  for subject in $(gls_or_ls -l -d $PWD/* | egrep '^d' | awk '{ print $9}'); do;
     continue_if_filtered $subject
     parse_subject $subject
   done
@@ -161,3 +172,4 @@ function wikify() {
 }
 
 wikify .
+
