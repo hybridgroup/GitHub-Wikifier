@@ -13,13 +13,44 @@ function wikify() {
       fi
   }
 
+  # to enable log, run
+  # git config wikify.log true
+  # 
+  # result:
+  # [INFO] some info blah blah
+  # 
+  # to remove logging,
+  # git config --unset wikify.log 
+  function log_info() {
+    local should_log=$(git config --get wikify.log) 
+    if [[ -n "$should_log" && "$should_log" = "true" ]]; then
+      if [[ -n "$2" ]]; then
+        local log_level="$(echo "$1" | tr 'a-z' 'A-Z')"
+        local log_message="$2"
+        echo "[$log_level] $log_message"
+      else
+        echo "[INFO] $@"
+      fi
+    fi
+  }
+
   # Filter some files and directories.
   function continue_if_filtered() {
-    if [[ "$@" =~ "images$" ]]; then
+    # $1 filename
+    # $2 directory
+
+    if [[ "$1" =~ "images$" ]]; then
+      log_info "$1: images so ignored."
       continue
-    elif [[ "$@" =~ "(_sidebar|_footer|_header)" ]]; then
+    elif [[ ( -n "$2" && $(file "$2/$1" | grep ".*: .* image.*," | sed "s;.*: .*\(image\)[^,]*, .*;\1;") == "image" ) || ( $(file "$1" | grep ".*: .* image.*," | sed "s;.*: .*\(image\)[^,]*, .*;\1;") == "image" ) ]]; then
+      # check file type and ignore it if it's image
+      log_info "$1: image so ignored."
       continue
-    elif [[ "$@" == "." ]]; then
+    elif [[ "$1" =~ "(_sidebar|_footer|_header)" ]]; then
+      log_info "$1 in (_sidebar|_footer|_header) so ignored."
+      continue
+    elif [[ "$1" == "." ]]; then
+      log_info "$1: ignored"
       continue
     fi
   }
@@ -116,14 +147,14 @@ function wikify() {
 
     # Directory write
     if [[ "$depth" -eq "0" ]]; then
-      echo "$(subject_to_header $@.md)"  >> "$subjects/Home.md"
-      echo "$(subject_to_header $@.md)\n---"  > "$@/_sidebar.md"
+      echo "$(subject_to_header $@)"  >> "$subjects/Home.md"
+      echo "$(subject_to_header $@)\n---"  > "$@/_sidebar.md"
       echo "$@.md" >> /tmp/wikify.txt
       echo "$@/_sidebar.md" >> /tmp/wikify.txt
     fi
 
     for file in $(gls_or_ls -l -v $@ | awk '{ print $9 }'); do;
-      continue_if_filtered $file
+      continue_if_filtered $file $@
       file="$@/$file"
 
       if [[ "$(file -ib $file)" =~ "directory" ]]; then
