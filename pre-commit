@@ -147,8 +147,8 @@ function wikify() {
 
     # Directory write
     if [[ "$depth" -eq "0" ]]; then
-      echo "$(subject_to_header $@.md)"  >> "$subjects/Home.md"
-      echo "$(subject_to_header $@.md)\n---"  > "$@/_sidebar.md"
+      echo "$(subject_to_header $@)"  >> "$subjects/Home.md"
+      echo "$(subject_to_header $@)\n---"  > "$@/_sidebar.md"
       echo "$@.md" >> /tmp/wikify.txt
       echo "$@/_sidebar.md" >> /tmp/wikify.txt
     fi
